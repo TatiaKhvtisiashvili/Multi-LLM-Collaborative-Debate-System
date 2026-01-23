@@ -80,6 +80,28 @@ class MetricsCalculator:
         print(f"Loaded {len(self.results)} result files")
         return self
 
+    def _safe_string_compare(self, value1, value2):
+        """Safely compare two values that might be strings, integers, or floats"""
+        # Convert to string if numeric
+        if isinstance(value1, (int, float)):
+            value1 = str(value1)
+        if isinstance(value2, (int, float)):
+            value2 = str(value2)
+
+        # Convert to string and clean
+        str1 = str(value1).strip().lower() if value1 is not None else ""
+        str2 = str(value2).strip().lower() if value2 is not None else ""
+
+        return str1 == str2
+
+    def _safe_to_string(self, value):
+        """Safely convert any value to string for processing"""
+        if value is None:
+            return ""
+        if isinstance(value, (int, float)):
+            return str(value)
+        return str(value).strip().lower()
+
     def calculate_problem_metrics(self) -> List[ProblemMetrics]:
         """Calculate metrics for each individual problem"""
         self.problems_metrics = []
@@ -94,16 +116,18 @@ class MetricsCalculator:
                     if solver_id in result.get('initial_solutions', {}):
                         sol = result['initial_solutions'][solver_id]
                         if sol.get('parse_success', True):
-                            answer = str(sol.get('final_answer', '')).strip().lower()
-                            if answer:
-                                initial_answers.append(str(answer).strip().lower())
+                            answer = sol.get('final_answer', '')
+                            answer_str = self._safe_to_string(answer)
+                            if answer_str:
+                                initial_answers.append(answer_str)
 
                     if solver_id in result.get('refined_solutions', {}):
                         sol = result['refined_solutions'][solver_id]
                         if sol.get('parse_success', True):
-                            answer = str(sol.get('final_answer', '')).strip().lower()
-                            if answer:
-                                refined_answers.append(str(answer).strip().lower())
+                            answer = sol.get('final_answer', '')
+                            answer_str = self._safe_to_string(answer)
+                            if answer_str:
+                                refined_answers.append(answer_str)
 
                 # Check consensus (all initial answers same)
                 if len(initial_answers) >= 2:
@@ -120,13 +144,14 @@ class MetricsCalculator:
                             break
 
                 # System answer from final judgement
-                system_answer = str(result.get('final_answer', '')).strip().lower()
-                ground_truth = str(result.get('ground_truth', '')).strip().lower()
-                system_correct = system_answer == ground_truth
+                system_answer = self._safe_to_string(result.get('final_answer', ''))
+                ground_truth = self._safe_to_string(result.get('ground_truth', ''))
+                system_correct = self._safe_string_compare(result.get('final_answer', ''),
+                                                           result.get('ground_truth', ''))
 
                 # Judge accuracy (when solvers disagreed, did judge pick correct one?)
                 judge_picked_correct = False
-                if not consensus and initial_answers:
+                if not consensus and initial_answers and ground_truth:
                     # Check if correct answer was among solver answers
                     correct_in_solutions = ground_truth in initial_answers
                     if correct_in_solutions:
@@ -134,12 +159,12 @@ class MetricsCalculator:
                         winner = result.get('final_judgement', {}).get('winner', '')
                         if winner in result.get('initial_solutions', {}):
                             winner_sol = result['initial_solutions'][winner]
-                            winner_answer = str(winner_sol.get('final_answer', '')).strip().lower()
+                            winner_answer = self._safe_to_string(winner_sol.get('final_answer', ''))
                             judge_picked_correct = winner_answer == ground_truth
 
                 metrics = ProblemMetrics(
                     problem_id=result.get('problem_id', 'unknown'),
-                    category=result.get('problem_text', '')[:50],  # Simplified
+                    category=result.get('problem_text', '')[:50] if result.get('problem_text') else 'unknown',
                     system_correct=system_correct,
                     system_answer=system_answer,
                     ground_truth=ground_truth,
@@ -192,13 +217,14 @@ class MetricsCalculator:
         problems_without_consensus = [m for m in self.problems_metrics if not m.solver_consensus]
         n_judge_correct = sum(1 for m in problems_without_consensus if m.judge_picked_correct)
 
-        overall_accuracy = n_correct / n_problems
+        overall_accuracy = n_correct / n_problems if n_problems > 0 else 0
         improvement_rate = n_refinement_changed / n_problems if n_problems > 0 else 0
         consensus_rate = n_consensus / n_problems if n_problems > 0 else 0
         judge_accuracy = n_judge_correct / len(problems_without_consensus) if problems_without_consensus else 0
 
         # Average processing time
-        avg_processing_time = np.mean([m.processing_time for m in self.problems_metrics])
+        avg_processing_time = np.mean(
+            [m.processing_time for m in self.problems_metrics]) if self.problems_metrics else 0
 
         # Category analysis (simplified)
         categories = defaultdict(list)
@@ -207,12 +233,12 @@ class MetricsCalculator:
             categories[cat].append(m)
 
         category_accuracy = {
-            cat: sum(1 for m in metrics if m.system_correct) / len(metrics)
+            cat: sum(1 for m in metrics if m.system_correct) / len(metrics) if metrics else 0
             for cat, metrics in categories.items()
         }
 
         category_consensus = {
-            cat: sum(1 for m in metrics if m.solver_consensus) / len(metrics)
+            cat: sum(1 for m in metrics if m.solver_consensus) / len(metrics) if metrics else 0
             for cat, metrics in categories.items()
         }
 
@@ -222,8 +248,11 @@ class MetricsCalculator:
 
         for result in self.results:
             confidence = result.get('confidence', 0)
-            system_correct = str(result.get('final_answer', '')).strip().lower() == str(
-                result.get('ground_truth', '')).strip().lower()
+            # Use safe comparison
+            system_correct = self._safe_string_compare(
+                result.get('final_answer', ''),
+                result.get('ground_truth', '')
+            )
 
             if system_correct:
                 confidences_correct.append(confidence)
@@ -238,15 +267,18 @@ class MetricsCalculator:
         all_correct = []
         for result in self.results:
             confidence = result.get('confidence', 0)
-            system_correct = str(result.get('final_answer', '')).strip().lower() == str(result.get('ground_truth', '')).strip().lower()
+            system_correct = self._safe_string_compare(
+                result.get('final_answer', ''),
+                result.get('ground_truth', '')
+            )
 
             all_confidences.append(confidence)
             all_correct.append(1 if system_correct else 0)
 
-        if len(all_confidences) > 1:
+        if len(all_confidences) > 1 and np.std(all_confidences) > 0 and np.std(all_correct) > 0:
             confidence_correlation = np.corrcoef(all_confidences, all_correct)[0, 1]
         else:
-            confidence_correlation = 0
+            confidence_correlation = 0.0
 
         # Solver performance analysis
         solver_accuracy = defaultdict(list)
@@ -259,8 +291,10 @@ class MetricsCalculator:
 
             for solver_id, solution in result.get('initial_solutions', {}).items():
                 if solution.get('parse_success', True):
-                    answer = str(solution.get('final_answer', '')).strip().lower()
-                    correct = answer == result.get('ground_truth', '').strip().lower()
+                    answer = solution.get('final_answer', '')
+                    answer_str = self._safe_to_string(answer)
+                    ground_truth = self._safe_to_string(result.get('ground_truth', ''))
+                    correct = answer_str == ground_truth
                     solver_accuracy[solver_id].append(correct)
 
         solver_individual_accuracy = {
@@ -283,8 +317,8 @@ class MetricsCalculator:
             for solver_id, solution in result.get('initial_solutions', {}).items():
                 if solution.get('parse_success', True):
                     answer = solution.get('final_answer', '')
-                    if answer:
-                        answers.append(str(answer))
+                    if answer is not None:
+                        answers.append(self._safe_to_string(answer))
 
             if len(set(answers)) > 1:  # Multiple different answers
                 contradiction_problems.append(result.get('problem_id', 'unknown'))
@@ -328,13 +362,20 @@ class MetricsCalculator:
         }
 
         for baseline_name, correctness_list in baseline_results.items():
-            if len(correctness_list) == len(system_correctness):
-                baseline_accuracy = np.mean(correctness_list)
+            if correctness_list:  # Check if list is not empty
+                baseline_accuracy = np.mean(correctness_list) if correctness_list else 0
                 comparison['baselines'][baseline_name] = {
                     'accuracy': baseline_accuracy,
                     'improvement_over_baseline': comparison['system_accuracy'] - baseline_accuracy,
-                    'relative_improvement': (comparison[
-                                                 'system_accuracy'] - baseline_accuracy) / baseline_accuracy if baseline_accuracy > 0 else 0
+                    'relative_improvement': (comparison['system_accuracy'] - baseline_accuracy) / baseline_accuracy
+                    if baseline_accuracy > 0 else 0
+                }
+            else:
+                # Handle empty baseline results
+                comparison['baselines'][baseline_name] = {
+                    'accuracy': 0,
+                    'improvement_over_baseline': comparison['system_accuracy'],
+                    'relative_improvement': float('inf') if comparison['system_accuracy'] > 0 else 0
                 }
 
         return comparison
@@ -405,31 +446,37 @@ class BaselineExperiment:
     async def run_single_model_baseline(
             self,
             problems: List[Dict[str, Any]],
-            model_key: str = "llama_3_3_70b"
+            model_key: str = "groq_llama_instant"  # Changed default to match your config
     ) -> List[bool]:
         """Run single model baseline (just ask once)"""
         from src.model_clients import BatchProcessor
         from src.agent_prompts import PromptTemplates
         from src.parsing_utils import extract_final_answer
 
-        model = self.model_factory.create_client(model_key, self.config)
-        batch_processor = BatchProcessor(max_concurrent=3)
+        try:
+            model = self.model_factory.create_client(model_key, self.config)
+        except Exception as e:
+            print(f"Error creating model client {model_key}: {e}")
+            # Return all False if model creation fails
+            return [False] * len(problems)
 
         correctness = []
 
         for problem in problems:
-            prompt = PromptTemplates.get_baseline_prompt(problem['problem'])
-
             try:
+                prompt = PromptTemplates.get_baseline_prompt(problem['problem'])
                 response = await model.generate_async(prompt)
                 answer = extract_final_answer(response.content)
-                ground_truth = problem['ground_truth_answer'].strip().lower()
 
-                is_correct = answer.strip().lower() == ground_truth
+                # Safe comparison
+                ground_truth = self._safe_to_string(problem.get('ground_truth_answer', ''))
+                answer_str = self._safe_to_string(answer)
+
+                is_correct = answer_str == ground_truth
                 correctness.append(is_correct)
 
             except Exception as e:
-                print(f"Error in baseline for {problem['id']}: {e}")
+                print(f"Error in baseline for {problem.get('id', 'unknown')}: {e}")
                 correctness.append(False)
 
         return correctness
@@ -437,7 +484,7 @@ class BaselineExperiment:
     async def run_voting_baseline(
             self,
             problems: List[Dict[str, Any]],
-            model_key: str = "llama_3_3_70b",
+            model_key: str = "groq_llama_instant",  # Changed default to match your config
             n_votes: int = 3
     ) -> List[bool]:
         """Run voting baseline (multiple independent answers, majority vote)"""
@@ -445,8 +492,12 @@ class BaselineExperiment:
         from src.agent_prompts import PromptTemplates
         from src.parsing_utils import extract_final_answer
 
-        model = self.model_factory.create_client(model_key, self.config)
-        batch_processor = BatchProcessor(max_concurrent=3)
+        try:
+            model = self.model_factory.create_client(model_key, self.config)
+        except Exception as e:
+            print(f"Error creating model client {model_key}: {e}")
+            # Return all False if model creation fails
+            return [False] * len(problems)
 
         correctness = []
 
@@ -459,10 +510,10 @@ class BaselineExperiment:
                     prompt = PromptTemplates.get_baseline_prompt(problem['problem'])
                     response = await model.generate_async(prompt)
                     answer = extract_final_answer(response.content)
-                    if answer:
-                        answers.append(answer.strip().lower())
+                    if answer is not None:
+                        answers.append(self._safe_to_string(answer))
                 except Exception as e:
-                    print(f"Error in voting baseline for {problem['id']}: {e}")
+                    print(f"Error in voting baseline for {problem.get('id', 'unknown')}: {e}")
 
             # Majority vote
             if answers:
@@ -470,7 +521,7 @@ class BaselineExperiment:
                 most_common = Counter(answers).most_common(1)
                 if most_common:
                     final_answer = most_common[0][0]
-                    ground_truth = problem['ground_truth_answer'].strip().lower()
+                    ground_truth = self._safe_to_string(problem.get('ground_truth_answer', ''))
                     is_correct = final_answer == ground_truth
                     correctness.append(is_correct)
                 else:
@@ -479,6 +530,14 @@ class BaselineExperiment:
                 correctness.append(False)
 
         return correctness
+
+    def _safe_to_string(self, value):
+        """Helper method to safely convert to string (copied from MetricsCalculator)"""
+        if value is None:
+            return ""
+        if isinstance(value, (int, float)):
+            return str(value)
+        return str(value).strip().lower()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,27 @@
+2026-01-23 20:43:36 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:43:36 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Initialized model: mistral_7b (mistral)
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Initialized model: mistral_mixtral (mistral)
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Successfully initialized 4 out of 4 models
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Starting debate for problem: MATH_05
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Stage 0: Role assignment for MATH_05
+2026-01-23 20:43:37 - src.debate_orchestrator - INFO - Phase 1: Collecting self-assessments...
+2026-01-23 20:43:37 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:43:40 - src.debate_orchestrator - INFO - Phase 2: Collaborative judge selection voting...
+2026-01-23 20:43:41 - src.debate_orchestrator - INFO - Received vote from groq_llama_instant
+2026-01-23 20:43:41 - openai._base_client - INFO - Retrying request to /chat/completions in 5.000000 seconds
+2026-01-23 20:43:46 - src.debate_orchestrator - INFO - Received vote from groq_llama_maverick
+2026-01-23 20:43:48 - src.debate_orchestrator - INFO - Received vote from mistral_7b
+2026-01-23 20:43:49 - src.debate_orchestrator - INFO - Received vote from mistral_mixtral
+2026-01-23 20:43:49 - src.debate_orchestrator - INFO - Final role assignments: {'judge': 'groq_llama_maverick', 'solver_1': 'mistral_7b', 'solver_2': 'groq_llama_instant', 'solver_3': 'mistral_mixtral'}
+2026-01-23 20:43:49 - src.debate_orchestrator - INFO - Stage 1: Generating independent solutions
+2026-01-23 20:43:52 - openai._base_client - INFO - Retrying request to /chat/completions in 3.000000 seconds
+2026-01-23 20:44:12 - src.debate_orchestrator - INFO - Stage 2: Peer reviews
+2026-01-23 20:44:14 - openai._base_client - INFO - Retrying request to /chat/completions in 10.000000 seconds
+2026-01-23 20:44:15 - openai._base_client - INFO - Retrying request to /chat/completions in 6.000000 seconds
+2026-01-23 20:44:25 - openai._base_client - INFO - Retrying request to /chat/completions in 16.000000 seconds
+2026-01-23 20:44:41 - src.debate_orchestrator - ERROR - Error in debate for MATH_05: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01kb8d2ewrfk6bz9mk5xwndv95` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5832, Requested 1668. Please try again in 15s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-01-23 20:44:41 - src.debate_orchestrator - INFO - Completed debate for MATH_05 in 63.93s
+2026-01-23 20:44:44 - openai._base_client - INFO - Retrying request to /chat/completions in 1.000000 seconds
+2026-01-23 20:44:47 - openai._base_client - INFO - Retrying request to /chat/completions in 1.000000 seconds
+2026-01-23 20:44:50 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds

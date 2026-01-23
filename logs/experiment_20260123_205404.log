@@ -1,0 +1,78 @@
+2026-01-23 20:54:04 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:54:04 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:54:04 - src.debate_orchestrator - INFO - Initialized model: mistral_7b (mistral)
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Initialized model: mistral_mixtral (mistral)
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Successfully initialized 4 out of 4 models
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Starting debate for problem: MATH_01
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Stage 0: Role assignment for MATH_01
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Phase 1: Collecting self-assessments...
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:54:05 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Initialized model: mistral_7b (mistral)
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Initialized model: mistral_mixtral (mistral)
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Successfully initialized 4 out of 4 models
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Starting debate for problem: MATH_03
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Stage 0: Role assignment for MATH_03
+2026-01-23 20:54:06 - src.debate_orchestrator - INFO - Phase 1: Collecting self-assessments...
+2026-01-23 20:54:10 - src.debate_orchestrator - INFO - Phase 2: Collaborative judge selection voting...
+2026-01-23 20:54:10 - src.debate_orchestrator - INFO - Phase 2: Collaborative judge selection voting...
+2026-01-23 20:54:10 - src.debate_orchestrator - INFO - Received vote from groq_llama_instant
+2026-01-23 20:54:10 - src.debate_orchestrator - INFO - Received vote from groq_llama_instant
+2026-01-23 20:54:10 - src.debate_orchestrator - INFO - Received vote from groq_llama_maverick
+2026-01-23 20:54:11 - src.debate_orchestrator - INFO - Received vote from groq_llama_maverick
+2026-01-23 20:54:12 - src.debate_orchestrator - INFO - Received vote from mistral_7b
+2026-01-23 20:54:12 - src.debate_orchestrator - INFO - Received vote from mistral_7b
+2026-01-23 20:54:13 - src.debate_orchestrator - INFO - Received vote from mistral_mixtral
+2026-01-23 20:54:13 - src.debate_orchestrator - INFO - Final role assignments: {'judge': 'mistral_mixtral', 'solver_1': 'groq_llama_instant', 'solver_2': 'groq_llama_maverick', 'solver_3': 'mistral_7b'}
+2026-01-23 20:54:13 - src.debate_orchestrator - INFO - Stage 1: Generating independent solutions
+2026-01-23 20:54:14 - src.debate_orchestrator - INFO - Received vote from mistral_mixtral
+2026-01-23 20:54:14 - src.debate_orchestrator - INFO - Final role assignments: {'judge': 'groq_llama_instant', 'solver_1': 'mistral_7b', 'solver_2': 'mistral_mixtral', 'solver_3': 'groq_llama_maverick'}
+2026-01-23 20:54:14 - src.debate_orchestrator - INFO - Stage 1: Generating independent solutions
+2026-01-23 20:54:19 - src.debate_orchestrator - INFO - Stage 2: Peer reviews
+2026-01-23 20:54:23 - src.debate_orchestrator - INFO - Stage 3: Refinement
+2026-01-23 20:54:23 - openai._base_client - INFO - Retrying request to /chat/completions in 10.000000 seconds
+2026-01-23 20:54:27 - src.debate_orchestrator - INFO - Stage 2: Peer reviews
+2026-01-23 20:54:35 - openai._base_client - INFO - Retrying request to /chat/completions in 8.000000 seconds
+2026-01-23 20:54:35 - openai._base_client - INFO - Retrying request to /chat/completions in 6.000000 seconds
+2026-01-23 20:54:36 - openai._base_client - INFO - Retrying request to /chat/completions in 19.000000 seconds
+2026-01-23 20:54:43 - openai._base_client - INFO - Retrying request to /chat/completions in 14.000000 seconds
+2026-01-23 20:54:55 - openai._base_client - INFO - Retrying request to /chat/completions in 14.000000 seconds
+2026-01-23 20:54:58 - src.debate_orchestrator - INFO - Stage 3: Refinement
+2026-01-23 20:55:09 - src.debate_orchestrator - ERROR - Error refining solution for solver_2: Error code: 429 - {'error': {'message': 'Rate limit reached for model `meta-llama/llama-4-maverick-17b-128e-instruct` in organization `org_01kc4sxb6fentvrayafeq39gxk` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4867, Requested 2695. Please try again in 15.62s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-01-23 20:55:14 - openai._base_client - INFO - Retrying request to /chat/completions in 9.000000 seconds
+2026-01-23 20:55:15 - src.debate_orchestrator - INFO - Stage 4: Final judgement
+2026-01-23 20:55:17 - src.debate_orchestrator - INFO - Completed debate for MATH_01 in 72.65s
+2026-01-23 20:55:18 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:55:18 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:55:18 - src.debate_orchestrator - INFO - Initialized model: mistral_7b (mistral)
+2026-01-23 20:55:19 - src.debate_orchestrator - INFO - Initialized model: mistral_mixtral (mistral)
+2026-01-23 20:55:19 - src.debate_orchestrator - INFO - Successfully initialized 4 out of 4 models
+2026-01-23 20:55:19 - src.debate_orchestrator - INFO - Starting debate for problem: MATH_05
+2026-01-23 20:55:19 - src.debate_orchestrator - INFO - Stage 0: Role assignment for MATH_05
+2026-01-23 20:55:19 - src.debate_orchestrator - INFO - Phase 1: Collecting self-assessments...
+2026-01-23 20:55:21 - src.debate_orchestrator - INFO - Phase 2: Collaborative judge selection voting...
+2026-01-23 20:55:22 - src.debate_orchestrator - INFO - Received vote from groq_llama_instant
+2026-01-23 20:55:22 - src.debate_orchestrator - INFO - Received vote from groq_llama_maverick
+2026-01-23 20:55:23 - src.debate_orchestrator - INFO - Received vote from mistral_7b
+2026-01-23 20:55:24 - openai._base_client - INFO - Retrying request to /chat/completions in 10.000000 seconds
+2026-01-23 20:55:26 - src.debate_orchestrator - INFO - Received vote from mistral_mixtral
+2026-01-23 20:55:26 - src.debate_orchestrator - INFO - Final role assignments: {'judge': 'groq_llama_maverick', 'solver_1': 'mistral_7b', 'solver_2': 'groq_llama_instant', 'solver_3': 'mistral_mixtral'}
+2026-01-23 20:55:26 - src.debate_orchestrator - INFO - Stage 1: Generating independent solutions
+2026-01-23 20:55:26 - src.debate_orchestrator - INFO - Stage 2: Peer reviews
+2026-01-23 20:55:36 - src.debate_orchestrator - INFO - Stage 4: Final judgement
+2026-01-23 20:55:36 - openai._base_client - INFO - Retrying request to /chat/completions in 6.000000 seconds
+2026-01-23 20:55:36 - src.debate_orchestrator - INFO - Stage 3: Refinement
+2026-01-23 20:55:43 - openai._base_client - INFO - Retrying request to /chat/completions in 8.000000 seconds
+2026-01-23 20:55:44 - src.debate_orchestrator - INFO - Completed debate for MATH_03 in 97.77s
+2026-01-23 20:55:51 - openai._base_client - INFO - Retrying request to /chat/completions in 20.000000 seconds
+2026-01-23 20:56:28 - src.debate_orchestrator - INFO - Stage 4: Final judgement
+2026-01-23 20:56:29 - src.debate_orchestrator - INFO - Completed debate for MATH_05 in 70.56s
+2026-01-23 20:56:35 - openai._base_client - INFO - Retrying request to /chat/completions in 1.000000 seconds
+2026-01-23 20:56:37 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:56:41 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:56:44 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:56:48 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:56:53 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds
+2026-01-23 20:56:57 - openai._base_client - INFO - Retrying request to /chat/completions in 1.000000 seconds
+2026-01-23 20:57:00 - openai._base_client - INFO - Retrying request to /chat/completions in 1.000000 seconds
+2026-01-23 20:57:02 - openai._base_client - INFO - Retrying request to /chat/completions in 2.000000 seconds

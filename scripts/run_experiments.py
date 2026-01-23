@@ -37,7 +37,8 @@ class ExperimentRunner:
 
         self.dataset_manager = DatasetManager()
 
-    async def run_full_experiment(self, problem_limit: int = None):
+    async def run_full_experiment(self, problem_limit: int = None, problem_id: str = None,
+    problem_list: str = None):
         """Run full experiment: debate system + baselines"""
         print("\n" + "=" * 60)
         print("MULTI-LLM DEBATE SYSTEM EXPERIMENT")
@@ -53,9 +54,7 @@ class ExperimentRunner:
             print("Dataset not found. Creating new dataset...")
             problems = await self._create_dataset()
 
-        if problem_limit:
-            problems = problems[:problem_limit]
-            print(f"Limited to {problem_limit} problems")
+        problems = self._filter_problems(problems, problem_limit, problem_id, problem_list)
 
         print(f"Loaded {len(problems)} problems")
 
@@ -106,7 +105,7 @@ class ExperimentRunner:
         problem_dicts = []
         for problem in problems:
             problem_dict = {
-                'id': problem.id,
+                'id': problem.id if hasattr(problem, 'id') else f"MATH_{problems.index(problem) + 1:02d}",
                 'category': problem.category,
                 'problem': problem.problem,
                 'ground_truth_answer': problem.ground_truth_answer,
@@ -434,6 +433,40 @@ class ExperimentRunner:
         print(f"\nReports saved to: data/results/")
         print("=" * 60)
 
+    def _filter_problems(
+            self,
+            problems: List[Problem],
+            limit: int = None,
+            problem_id: str = None,
+            problem_list: str = None
+    ) -> List[Problem]:
+        """Filter problems based on selection criteria"""
+        filtered_problems = problems
+
+        # Filter by specific problem ID
+        if problem_id:
+            filtered_problems = [p for p in filtered_problems if p.id == problem_id]
+            if not filtered_problems:
+                print(f"Warning: Problem ID '{problem_id}' not found. Using all problems.")
+                filtered_problems = problems
+
+        # Filter by list of problem IDs
+        elif problem_list:
+            id_list = [pid.strip() for pid in problem_list.split(',')]
+            filtered_problems = [p for p in filtered_problems if p.id in id_list]
+            if not filtered_problems:
+                print(f"Warning: None of the specified problems found. Using all problems.")
+                filtered_problems = problems
+            else:
+                print(f"Selected {len(filtered_problems)} problems from list: {id_list}")
+
+        # Apply limit (but only if we're not selecting specific problems)
+        if limit and not (problem_id or problem_list):
+            filtered_problems = filtered_problems[:limit]
+            print(f"Limited to first {limit} problems")
+
+        return filtered_problems
+
 
 async def main():
     """Main entry point"""
@@ -441,6 +474,10 @@ async def main():
     parser.add_argument('--limit', type=int, help='Limit number of problems to process')
     parser.add_argument('--config', type=str, default='config.yaml', help='Path to config file')
     parser.add_argument('--skip-baselines', action='store_true', help='Skip baseline experiments')
+    # ADD THESE NEW ARGUMENTS:
+    parser.add_argument('--problem-id', type=str, help='Specific problem ID to run (e.g., MATH_01)')
+    parser.add_argument('--problem-list', type=str,
+                        help='Comma-separated list of problem IDs (e.g., MATH_01,MATH_03,MATH_05)')
 
     args = parser.parse_args()
 
@@ -448,7 +485,11 @@ async def main():
     runner = ExperimentRunner(config_path=args.config)
 
     try:
-        await runner.run_full_experiment(problem_limit=args.limit)
+        await runner.run_full_experiment(
+            problem_limit=args.limit,
+            problem_id=args.problem_id,
+            problem_list=args.problem_list
+        )
     except KeyboardInterrupt:
         print("\nExperiment interrupted by user")
     except Exception as e:

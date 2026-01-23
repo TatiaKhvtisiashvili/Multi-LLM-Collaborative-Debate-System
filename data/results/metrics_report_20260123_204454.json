@@ -1,0 +1,39 @@
+{
+  "system_metrics": {
+    "overall_accuracy": 0.7142857142857143,
+    "improvement_rate": 0.0,
+    "consensus_rate": 0.0,
+    "judge_accuracy": 0.0,
+    "avg_processing_time": 17.39360442857143,
+    "category_accuracy": {
+      "": 1.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0,
+      "How many ways can 10 indistinguishable balls be pl": 0.0
+    },
+    "category_consensus": {
+      "": 0.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0,
+      "How many ways can 10 indistinguishable balls be pl": 0.0
+    },
+    "avg_confidence_when_correct": 0.0,
+    "avg_confidence_when_wrong": 0.0,
+    "confidence_correlation": NaN,
+    "solver_individual_accuracy": {
+      "solver_1": 0.0,
+      "solver_2": 0.0,
+      "solver_3": 0.0
+    },
+    "solver_contribution_to_wins": {},
+    "common_error_types": [],
+    "problems_with_contradictions": [
+      "MATH_01",
+      "MATH_05"
+    ]
+  },
+  "comparison_with_baselines": {
+    "system_accuracy": 0.7142857142857143,
+    "baselines": {}
+  },
+  "detailed_report_path": "data\\results\\detailed_evaluation_report.json",
+  "timestamp": "2026-01-23T20:44:54.050849"
+}

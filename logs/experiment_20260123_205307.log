@@ -1,0 +1,40 @@
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_7b: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_mixtral: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Successfully initialized 2 out of 4 models
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Insufficient models initialized: 2/3 (need at least 3)
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_7b: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_mixtral: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Successfully initialized 2 out of 4 models
+2026-01-23 20:53:08 - src.debate_orchestrator - ERROR - Insufficient models initialized: 2/3 (need at least 3)
+2026-01-23 20:53:08 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:53:09 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:53:09 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_7b: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:09 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_mixtral: MISTRAL_API_KEY not set in environment
+2026-01-23 20:53:09 - src.debate_orchestrator - INFO - Successfully initialized 2 out of 4 models
+2026-01-23 20:53:09 - src.debate_orchestrator - ERROR - Insufficient models initialized: 2/3 (need at least 3)
+2026-01-23 20:53:09 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<run_debates_batch.<locals>.run_with_semaphore() done, defined at C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py:606> exception=ValueError('Insufficient models initialized: 2/3 (need at least 3)')>
+Traceback (most recent call last):
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 608, in run_with_semaphore
+    orchestrator = DebateOrchestrator(config_path)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 71, in __init__
+    self._init_models()
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 111, in _init_models
+    raise ValueError(error_msg)
+ValueError: Insufficient models initialized: 2/3 (need at least 3)
+2026-01-23 20:53:09 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<run_debates_batch.<locals>.run_with_semaphore() done, defined at C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py:606> exception=ValueError('Insufficient models initialized: 2/3 (need at least 3)')>
+Traceback (most recent call last):
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 608, in run_with_semaphore
+    orchestrator = DebateOrchestrator(config_path)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 71, in __init__
+    self._init_models()
+  File "C:\Users\slevi\OneDrive\Desktop\LLMnew\src\debate_orchestrator.py", line 111, in _init_models
+    raise ValueError(error_msg)
+ValueError: Insufficient models initialized: 2/3 (need at least 3)

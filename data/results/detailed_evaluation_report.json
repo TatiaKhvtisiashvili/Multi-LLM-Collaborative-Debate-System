@@ -1,15 +1,17 @@
 {
   "summary": {
-    "total_problems": 2,
-    "overall_accuracy": 0.5,
-    "improvement_rate": 0.0,
+    "total_problems": 17,
+    "overall_accuracy": 0.6470588235294118,
+    "improvement_rate": 0.23529411764705882,
     "consensus_rate": 0.0,
     "judge_accuracy": 0.0,
-    "avg_processing_time_seconds": 28.9122205
+    "avg_processing_time_seconds": 24.15532505882353
   },
   "category_performance": {
-    "": 1.0,
-    "A 3×n rectangle is to be tiled with 2×1 dominoes. ": 0.0
+    "unknown": 1.0,
+    "A 3×n rectangle is to be tiled with 2×1 dominoes. ": 0.0,
+    "What is the smallest positive integer n > 1000 suc": 0.0,
+    "How many ways can 10 indistinguishable balls be pl": 0.0
   },
   "solver_performance": {
     "solver_1": 0.0,
@@ -19,12 +21,42 @@
   "confidence_analysis": {
     "avg_when_correct": 0.0,
     "avg_when_wrong": 0.0,
-    "correlation_with_correctness": NaN
+    "correlation_with_correctness": 0.0
   },
   "problem_details": [
     {
       "problem_id": "unknown",
-      "category": "",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
       "system_correct": true,
       "system_answer": "",
       "ground_truth": "",
@@ -41,13 +73,138 @@
       "solver_consensus": false,
       "refinement_changed": false,
       "judge_picked_correct": false
+    },
+    {
+      "problem_id": "MATH_01",
+      "category": "A 3×n rectangle is to be tiled with 2×1 dominoes. ",
+      "system_correct": false,
+      "system_answer": "55",
+      "ground_truth": "34",
+      "solver_consensus": false,
+      "refinement_changed": true,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "MATH_01",
+      "category": "A 3×n rectangle is to be tiled with 2×1 dominoes. ",
+      "system_correct": false,
+      "system_answer": "153",
+      "ground_truth": "34",
+      "solver_consensus": false,
+      "refinement_changed": true,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "MATH_03",
+      "category": "What is the smallest positive integer n > 1000 suc",
+      "system_correct": false,
+      "system_answer": "1024",
+      "ground_truth": "1156",
+      "solver_consensus": false,
+      "refinement_changed": true,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "MATH_05",
+      "category": "How many ways can 10 indistinguishable balls be pl",
+      "system_correct": false,
+      "system_answer": "",
+      "ground_truth": "120",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "MATH_05",
+      "category": "How many ways can 10 indistinguishable balls be pl",
+      "system_correct": false,
+      "system_answer": "46",
+      "ground_truth": "120",
+      "solver_consensus": false,
+      "refinement_changed": true,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
+    },
+    {
+      "problem_id": "unknown",
+      "category": "unknown",
+      "system_correct": true,
+      "system_answer": "",
+      "ground_truth": "",
+      "solver_consensus": false,
+      "refinement_changed": false,
+      "judge_picked_correct": false
     }
   ],
   "error_analysis": {
     "common_error_types": [],
     "problems_with_contradictions": [
-      "MATH_01"
+      "MATH_01",
+      "MATH_01",
+      "MATH_01",
+      "MATH_03",
+      "MATH_05",
+      "MATH_05"
     ]
   },
-  "timestamp": "2026-01-23T20:29:28.669553"
+  "timestamp": "2026-01-23T21:11:18.557572"
 }

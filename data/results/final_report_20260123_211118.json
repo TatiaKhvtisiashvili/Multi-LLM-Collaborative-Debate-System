@@ -1,0 +1,103 @@
+{
+  "experiment_summary": {
+    "start_time": "2026-01-23T21:10:24.546255",
+    "end_time": "2026-01-23T21:11:18.559570",
+    "total_duration_seconds": 54.013315,
+    "total_problems": 1,
+    "total_api_calls": 0,
+    "total_tokens_used": 0
+  },
+  "system_performance": {
+    "overall_accuracy": 0.6470588235294118,
+    "improvement_rate": 0.23529411764705882,
+    "consensus_rate": 0.0,
+    "judge_accuracy": 0.0,
+    "avg_processing_time": 24.15532505882353,
+    "category_accuracy": {
+      "unknown": 1.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0,
+      "What is the smallest positive integer n > 1000 suc": 0.0,
+      "How many ways can 10 indistinguishable balls be pl": 0.0
+    },
+    "category_consensus": {
+      "unknown": 0.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0,
+      "What is the smallest positive integer n > 1000 suc": 0.0,
+      "How many ways can 10 indistinguishable balls be pl": 0.0
+    },
+    "avg_confidence_when_correct": 0.0,
+    "avg_confidence_when_wrong": 0.0,
+    "confidence_correlation": 0.0,
+    "solver_individual_accuracy": {
+      "solver_1": 0.0,
+      "solver_2": 0.0,
+      "solver_3": 0.0
+    },
+    "solver_contribution_to_wins": {},
+    "common_error_types": [],
+    "problems_with_contradictions": [
+      "MATH_01",
+      "MATH_01",
+      "MATH_01",
+      "MATH_03",
+      "MATH_05",
+      "MATH_05"
+    ]
+  },
+  "baseline_comparison": {
+    "system_accuracy": 0.6470588235294118,
+    "baselines": {
+      "single_model": {
+        "accuracy": 1.0,
+        "improvement_over_baseline": -0.3529411764705882,
+        "relative_improvement": -0.3529411764705882
+      },
+      "voting": {
+        "accuracy": 0.0,
+        "improvement_over_baseline": 0.6470588235294118,
+        "relative_improvement": 0
+      }
+    }
+  },
+  "key_findings": [
+    "Debate system accuracy (64.7%) similar to single-model baseline (100.0%)",
+    "Peer review led to solution refinement in 23.5% of cases",
+    "Solvers reached initial consensus in 0.0% of problems"
+  ],
+  "recommendations": [
+    "Implement better confidence calibration - current confidence scores don't correlate well with correctness",
+    "Consider adding more diverse models to the solver pool",
+    "Implement more sophisticated peer review matching based on problem type",
+    "Add human evaluation component for ambiguous cases"
+  ],
+  "files_generated": [
+    "results\\baselines_20260123_202928.json",
+    "results\\baselines_20260123_204454.json",
+    "results\\baselines_20260123_205706.json",
+    "results\\baselines_20260123_211118.json",
+    "results\\debate_MATH_01_20260123_202923.json",
+    "results\\debate_MATH_01_20260123_205629.json",
+    "results\\debate_MATH_01_20260123_211113.json",
+    "results\\debate_MATH_03_20260123_205629.json",
+    "results\\debate_MATH_05_20260123_204441.json",
+    "results\\debate_MATH_05_20260123_205629.json",
+    "results\\detailed_evaluation_report.json",
+    "results\\final_report_20260123_202928.json",
+    "results\\final_report_20260123_204454.json",
+    "results\\final_report_20260123_205706.json",
+    "results\\metrics_report_20260123_202928.json",
+    "results\\metrics_report_20260123_204454.json",
+    "results\\metrics_report_20260123_205706.json",
+    "results\\metrics_report_20260123_211118.json",
+    "logs\\experiment_20260123_200019.log",
+    "logs\\experiment_20260123_200132.log",
+    "logs\\experiment_20260123_200413.log",
+    "logs\\experiment_20260123_200534.log",
+    "logs\\experiment_20260123_202824.log",
+    "logs\\experiment_20260123_204336.log",
+    "logs\\experiment_20260123_204625.log",
+    "logs\\experiment_20260123_205307.log",
+    "logs\\experiment_20260123_205404.log",
+    "logs\\experiment_20260123_211024.log"
+  ]
+}

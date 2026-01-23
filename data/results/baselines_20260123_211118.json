@@ -1,0 +1,11 @@
+{
+  "single_model": [
+    true
+  ],
+  "voting": [
+    false
+  ],
+  "baseline_model_used": "groq_llama_instant",
+  "timestamp": "2026-01-23T21:11:18.525734",
+  "total_problems": 1
+}
