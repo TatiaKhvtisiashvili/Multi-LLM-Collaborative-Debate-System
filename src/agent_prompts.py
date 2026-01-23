@@ -200,48 +200,48 @@ Respond ONLY with valid JSON, no additional text."""
 
         return f"""You are the Final Judge in a collaborative debate system.
 
-TASK: Evaluate all solutions and reviews to select the best final answer.
+    TASK: Evaluate all solutions and reviews to select the best final answer.
 
-PROBLEM:
-{problem}
+    PROBLEM:
+    {problem}
 
-GROUND TRUTH ANSWER (for reference only):
-{ground_truth}
+    COMPLETE DEBATE DATA:
+    {data_json}
 
-COMPLETE DEBATE DATA:
-{data_json}
+    JUDGING CRITERIA:
+    1. Correctness and accuracy of final answer
+    2. Quality and clarity of reasoning
+    3. Responsiveness to peer feedback
+    4. Robustness (handles edge cases)
+    5. Efficiency and elegance of solution
 
-JUDGING CRITERIA:
-1. Correctness and accuracy of final answer
-2. Quality and clarity of reasoning
-3. Responsiveness to peer feedback
-4. Robustness (handles edge cases)
-5. Efficiency and elegance of solution
+    IMPORTANT: 
+    - You must select ONE winner from the debaters' solutions
+    - Consider both original and refined solutions
+    - Do NOT provide your own answer - pick one from the debaters
+    - Base your decision on the quality of reasoning, not external knowledge
 
-IMPORTANT: You must select ONE winner. Consider both original and refined solutions.
+    OUTPUT FORMAT (JSON):
+    {{
+        "judgement": {{
+            "winner": "solver_1",  # or "solver_2", "solver_3"
+            "winner_original_id": "solver_1",
+            "confidence": 0.85,
+            "reasoning": "Solver 1's solution is strongest because...",
+            "ranking": [
+                {{"solver": "solver_1", "score": 0.95, "reason": "Most accurate with best reasoning"}},
+                {{"solver": "solver_3", "score": 0.80, "reason": "Good but missed edge case"}},
+                {{"solver": "solver_2", "score": 0.65, "reason": "Fundamental error in approach"}}
+            ],
+            "key_differentiators": [
+                "Solver 1 correctly handled the edge case that others missed",
+                "Solver 3's refinement showed good learning but initial solution was weak"
+            ]
+        }},
+        "selected_final_answer": "The final answer to return to user (MUST be one of the debaters' answers)"
+    }}
 
-OUTPUT FORMAT (JSON):
-{{
-    "judgement": {{
-        "winner": "solver_1",  # or "solver_2", "solver_3"
-        "winner_original_id": "solver_1",
-        "confidence": 0.85,
-        "reasoning": "Solver 1's solution is strongest because...",
-        "ranking": [
-            {{"solver": "solver_1", "score": 0.95, "reason": "Most accurate with best reasoning"}},
-            {{"solver": "solver_3", "score": 0.80, "reason": "Good but missed edge case"}},
-            {{"solver": "solver_2", "score": 0.65, "reason": "Fundamental error in approach"}}
-        ],
-        "key_differentiators": [
-            "Solver 1 correctly handled the edge case that others missed",
-            "Solver 3's refinement showed good learning but initial solution was weak"
-        ]
-    }},
-    "selected_final_answer": "The final answer to return to user",
-    "note_on_ground_truth": "Agrees with ground truth"  # or "Differs from ground truth, reasoning: ..."
-}}
-
-Respond ONLY with valid JSON, no additional text."""
+    Respond ONLY with valid JSON, no additional text."""
 
     # Baseline prompts for comparison
     @staticmethod

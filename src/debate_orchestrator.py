@@ -448,11 +448,13 @@ class DebateOrchestrator:
             refined_solutions: Dict[str, Dict[str, Any]],
             judge_client: Any
     ) -> Dict[str, Any]:
-        """Stage 4: Final judgement"""
+        """Stage 4: Final judgement - NO ground truth provided to judge"""
         logger.info("Stage 4: Final judgement")
 
         problem_text = problem['problem']
-        ground_truth = problem.get('ground_truth_answer', '')
+
+        # IMPORTANT: DO NOT pass ground truth to judge
+        # Judge should pick best from debaters, not compare to correct answer
 
         # Prepare all data for judge
         prompt = PromptTemplates.get_judgement_prompt(
