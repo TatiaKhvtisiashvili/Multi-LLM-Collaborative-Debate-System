@@ -96,14 +96,19 @@ class DebateOrchestrator:
         for key in model_keys:
             try:
                 self.models[key] = self.model_factory.create_client(key, self.config)
-                logger.info(f"Initialized model: {key}")
+                logger.info(f"Initialized model: {key} ({self.models[key].provider})")
                 successful_models += 1
             except Exception as e:
                 logger.error(f"Failed to initialize model {key}: {e}")
 
-        if successful_models < 4:
-            logger.error(f"Only {successful_models} models initialized, need 4")
-            raise ValueError(f"Insufficient models initialized: {successful_models}/4")
+        logger.info(f"Successfully initialized {successful_models} out of {len(model_keys)} models")
+
+        # Instead of raising error, we can continue with available models
+        # But we need at least 3 models for the debate system
+        if successful_models < 3:
+            error_msg = f"Insufficient models initialized: {successful_models}/3 (need at least 3)"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
 
     async def run_debate(self, problem: Dict[str, Any]) -> DebateResult:
         """
