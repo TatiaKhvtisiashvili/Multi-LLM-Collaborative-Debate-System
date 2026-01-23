@@ -1,0 +1,62 @@
+{
+  "experiment_summary": {
+    "start_time": "2026-01-23T20:28:24.269433",
+    "end_time": "2026-01-23T20:29:28.672661",
+    "total_duration_seconds": 64.403228,
+    "total_problems": 1,
+    "total_api_calls": 0,
+    "total_tokens_used": 0
+  },
+  "system_performance": {
+    "overall_accuracy": 0.5,
+    "improvement_rate": 0.0,
+    "consensus_rate": 0.0,
+    "judge_accuracy": 0.0,
+    "avg_processing_time": 28.9122205,
+    "category_accuracy": {
+      "": 1.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0
+    },
+    "category_consensus": {
+      "": 0.0,
+      "A 3\u00d7n rectangle is to be tiled with 2\u00d71 dominoes. ": 0.0
+    },
+    "avg_confidence_when_correct": 0.0,
+    "avg_confidence_when_wrong": 0.0,
+    "confidence_correlation": NaN,
+    "solver_individual_accuracy": {
+      "solver_1": 0.0,
+      "solver_2": 0.0,
+      "solver_3": 0.0
+    },
+    "solver_contribution_to_wins": {},
+    "common_error_types": [],
+    "problems_with_contradictions": [
+      "MATH_01"
+    ]
+  },
+  "baseline_comparison": {
+    "system_accuracy": 0.5,
+    "baselines": {}
+  },
+  "key_findings": [
+    "Debate system achieved 50.0% accuracy, improving over single-model baseline (0.0%) by 0.0%",
+    "Solvers reached initial consensus in 0.0% of problems"
+  ],
+  "recommendations": [
+    "Consider adding more diverse models to the solver pool",
+    "Implement more sophisticated peer review matching based on problem type",
+    "Add human evaluation component for ambiguous cases"
+  ],
+  "files_generated": [
+    "results\\baselines_20260123_202928.json",
+    "results\\debate_MATH_01_20260123_202923.json",
+    "results\\detailed_evaluation_report.json",
+    "results\\metrics_report_20260123_202928.json",
+    "logs\\experiment_20260123_200019.log",
+    "logs\\experiment_20260123_200132.log",
+    "logs\\experiment_20260123_200413.log",
+    "logs\\experiment_20260123_200534.log",
+    "logs\\experiment_20260123_202824.log"
+  ]
+}

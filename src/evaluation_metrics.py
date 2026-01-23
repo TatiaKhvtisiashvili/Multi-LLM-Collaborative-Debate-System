@@ -94,14 +94,14 @@ class MetricsCalculator:
                     if solver_id in result.get('initial_solutions', {}):
                         sol = result['initial_solutions'][solver_id]
                         if sol.get('parse_success', True):
-                            answer = sol.get('final_answer', '')
+                            answer = str(sol.get('final_answer', '')).strip().lower()
                             if answer:
                                 initial_answers.append(str(answer).strip().lower())
 
                     if solver_id in result.get('refined_solutions', {}):
                         sol = result['refined_solutions'][solver_id]
                         if sol.get('parse_success', True):
-                            answer = sol.get('final_answer', '')
+                            answer = str(sol.get('final_answer', '')).strip().lower()
                             if answer:
                                 refined_answers.append(str(answer).strip().lower())
 
@@ -120,8 +120,8 @@ class MetricsCalculator:
                             break
 
                 # System answer from final judgement
-                system_answer = result.get('final_answer', '').strip().lower()
-                ground_truth = result.get('ground_truth', '').strip().lower()
+                system_answer = str(result.get('final_answer', '')).strip().lower()
+                ground_truth = str(result.get('ground_truth', '')).strip().lower()
                 system_correct = system_answer == ground_truth
 
                 # Judge accuracy (when solvers disagreed, did judge pick correct one?)
@@ -222,8 +222,8 @@ class MetricsCalculator:
 
         for result in self.results:
             confidence = result.get('confidence', 0)
-            system_correct = result.get('final_answer', '').strip().lower() == result.get('ground_truth',
-                                                                                          '').strip().lower()
+            system_correct = str(result.get('final_answer', '')).strip().lower() == str(
+                result.get('ground_truth', '')).strip().lower()
 
             if system_correct:
                 confidences_correct.append(confidence)
@@ -238,8 +238,8 @@ class MetricsCalculator:
         all_correct = []
         for result in self.results:
             confidence = result.get('confidence', 0)
-            system_correct = result.get('final_answer', '').strip().lower() == result.get('ground_truth',
-                                                                                          '').strip().lower()
+            system_correct = str(result.get('final_answer', '')).strip().lower() == str(result.get('ground_truth', '')).strip().lower()
+
             all_confidences.append(confidence)
             all_correct.append(1 if system_correct else 0)
 

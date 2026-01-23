@@ -1,0 +1,19 @@
+2026-01-23 20:28:24 - src.debate_orchestrator - INFO - Initialized model: groq_llama_instant (groq)
+2026-01-23 20:28:24 - src.debate_orchestrator - INFO - Initialized model: groq_llama_maverick (groq)
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Initialized model: mistral_7b (mistral)
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Initialized model: mistral_mixtral (mistral)
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Successfully initialized 4 out of 4 models
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Starting debate for problem: MATH_01
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Stage 0: Role assignment for MATH_01
+2026-01-23 20:28:25 - src.debate_orchestrator - INFO - Phase 1: Collecting self-assessments...
+2026-01-23 20:28:29 - src.debate_orchestrator - INFO - Phase 2: Collaborative judge selection voting...
+2026-01-23 20:28:29 - src.debate_orchestrator - INFO - Received vote from groq_llama_instant
+2026-01-23 20:28:30 - src.debate_orchestrator - INFO - Received vote from groq_llama_maverick
+2026-01-23 20:28:31 - src.debate_orchestrator - INFO - Received vote from mistral_7b
+2026-01-23 20:28:33 - src.debate_orchestrator - INFO - Received vote from mistral_mixtral
+2026-01-23 20:28:33 - src.debate_orchestrator - INFO - Final role assignments: {'judge': 'groq_llama_maverick', 'solver_1': 'mistral_7b', 'solver_2': 'groq_llama_instant', 'solver_3': 'mistral_mixtral'}
+2026-01-23 20:28:33 - src.debate_orchestrator - INFO - Stage 1: Generating independent solutions
+2026-01-23 20:28:38 - src.debate_orchestrator - INFO - Stage 2: Peer reviews
+2026-01-23 20:28:59 - src.debate_orchestrator - INFO - Stage 3: Refinement
+2026-01-23 20:29:22 - src.debate_orchestrator - INFO - Stage 4: Final judgement
+2026-01-23 20:29:23 - src.debate_orchestrator - INFO - Completed debate for MATH_01 in 57.82s

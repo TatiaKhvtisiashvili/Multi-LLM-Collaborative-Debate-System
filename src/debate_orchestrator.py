@@ -553,7 +553,6 @@ class DebateOrchestrator:
 
     def _check_correctness(self, final_answer: str, ground_truth: str) -> bool:
         """Check if final answer matches ground truth"""
-        # Simple string comparison (could be enhanced with fuzzy matching)
         return str(final_answer).strip().lower() == str(ground_truth).strip().lower()
 
     def _update_usage_stats(self, usage: Dict[str, int]):

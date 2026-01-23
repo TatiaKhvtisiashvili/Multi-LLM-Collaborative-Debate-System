@@ -1,0 +1,6 @@
+2026-01-23 20:04:13 - src.debate_orchestrator - ERROR - Failed to initialize model groq_llama_instant: GROQ_API_KEY not set in environment
+2026-01-23 20:04:13 - src.debate_orchestrator - ERROR - Failed to initialize model groq_llama_maverick: GROQ_API_KEY not set in environment
+2026-01-23 20:04:13 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_7b: MISTRAL_API_KEY not set in environment
+2026-01-23 20:04:13 - src.debate_orchestrator - ERROR - Failed to initialize model mistral_mixtral: MISTRAL_API_KEY not set in environment
+2026-01-23 20:04:13 - src.debate_orchestrator - INFO - Successfully initialized 0 out of 4 models
+2026-01-23 20:04:13 - src.debate_orchestrator - ERROR - Insufficient models initialized: 0/3 (need at least 3)
