@@ -209,13 +209,14 @@ class DebateOrchestrator:
     async def _stage_0_role_assignment(
             self, problem: Dict[str, Any], result: DebateResult
     ) -> Dict[str, str]:
-        """Stage 0 & 0.5: Self-assessment and role assignment"""
+        """Stage 0 & 0.5 & 0.75: Self-assessment, voting, and role assignment"""
         logger.info(f"Stage 0: Role assignment for {problem['id']}")
 
         problem_text = problem['problem']
         model_keys = list(self.models.keys())
 
-        # Get self-assessments from all models
+        # PHASE 1: Self-assessments from all models
+        logger.info("Phase 1: Collecting self-assessments...")
         assessments = {}
         tasks = []
 
@@ -225,7 +226,6 @@ class DebateOrchestrator:
                 problem_text, ["Solver", "Judge"]
             )
             system_prompt = SystemPrompts.SELF_ASSESSMENT_SYSTEM_PROMPT
-
             tasks.append((client, prompt, system_prompt))
 
         # Batch process assessments
@@ -235,7 +235,6 @@ class DebateOrchestrator:
             model_key = [k for k, v in self.models.items() if v == client][0]
 
             if response:
-                # Parse assessment
                 assessment = self.role_assigner.parse_self_assessment(
                     response.content, model_key
                 )
@@ -248,12 +247,65 @@ class DebateOrchestrator:
                     'reasoning_summary': assessment.reasoning[:200]
                 }
 
-        # Algorithmic assignment
-        assignments = self.role_assigner.algorithmic_assignment(
-            assessments, problem_text, model_keys
+        # PHASE 2: Collaborative judge voting
+        logger.info("Phase 2: Collaborative judge selection voting...")
+
+        # Import the judge voting prompt (add to agent_prompts.py)
+        vote_responses = {}
+        vote_tasks = []
+
+        for model_key in model_keys:
+            client = self.models[model_key]
+
+            # Create voting prompt with other models' assessments
+            prompt = PromptTemplates.get_judge_voting_prompt(
+                problem_text,
+                result.self_assessments,
+                model_key
+            )
+            system_prompt = """You are participating in collaborative decision-making to select the best judge for this problem. Be objective and analytical in your voting."""
+
+            vote_tasks.append((client, prompt, system_prompt, model_key))
+
+        # Process votes
+        for client, prompt, system_prompt, voter_model in vote_tasks:
+            try:
+                response = await client.generate_async(prompt, system_prompt)
+
+                # Parse vote
+                vote = self.role_assigner.parse_judge_vote(
+                    response.content, voter_model
+                )
+                vote_responses[voter_model] = vote
+
+                logger.info(f"Received vote from {voter_model}")
+
+            except Exception as e:
+                logger.error(f"Error getting vote from {voter_model}: {e}")
+
+        # PHASE 3: Tally votes and select judge
+        selected_judge = self.role_assigner.collaborative_judge_selection(
+            assessments, model_keys, vote_responses
         )
 
-        logger.info(f"Role assignments: {assignments}")
+        # PHASE 4: Assign remaining roles (solvers)
+        assignments = self.role_assigner.algorithmic_assignment(
+            assessments, problem_text, model_keys, selected_judge
+        )
+
+        # Store voting data in result
+        result.self_assessments['voting_results'] = {
+            'selected_judge': selected_judge,
+            'votes': {
+                voter: {
+                    'votes_for': vote.votes_for,
+                    'reasoning': vote.reasoning[:200]
+                }
+                for voter, vote in vote_responses.items()
+            }
+        }
+
+        logger.info(f"Final role assignments: {assignments}")
         return assignments
 
     def _get_solver_clients(self, assignments: Dict[str, str]) -> List[Any]:

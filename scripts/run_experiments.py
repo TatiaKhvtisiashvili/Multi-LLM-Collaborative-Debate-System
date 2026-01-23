@@ -146,20 +146,38 @@ class ExperimentRunner:
         baseline_experiment = BaselineExperiment(self.config_path)
         problem_dicts = [p.__dict__ for p in problems]
 
-        print("Running single-model baseline...")
+        # FIX: Use a model that actually exists in config.yaml
+        # Get first available model from config
+        available_models = list(self.dataset_manager.load_or_create_default_dataset())
+
+        # Read config to find available model
+        import yaml
+        with open(self.config_path, 'r') as f:
+            config = yaml.safe_load(f)
+
+        available_model_keys = list(config.get('models', {}).keys())
+
+        if not available_model_keys:
+            raise ValueError("No models configured in config.yaml")
+
+        # Use first available model for baselines
+        baseline_model = available_model_keys[0]
+
+        print(f"Running single-model baseline with {baseline_model}...")
         single_model_results = await baseline_experiment.run_single_model_baseline(
-            problem_dicts, model_key="llama_3_3_70b"
+            problem_dicts, model_key=baseline_model
         )
 
-        print("Running voting baseline...")
+        print(f"Running voting baseline with {baseline_model}...")
         voting_results = await baseline_experiment.run_voting_baseline(
-            problem_dicts, model_key="llama_3_3_70b", n_votes=3
+            problem_dicts, model_key=baseline_model, n_votes=3
         )
 
         # Save baseline results
         baseline_data = {
             'single_model': single_model_results,
             'voting': voting_results,
+            'baseline_model_used': baseline_model,
             'timestamp': format_timestamp(datetime.now()),
             'total_problems': len(problems)
         }

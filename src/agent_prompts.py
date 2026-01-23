@@ -74,6 +74,67 @@ OUTPUT FORMAT (JSON):
 
 Respond ONLY with valid JSON, no additional text."""
 
+
+    @staticmethod
+    def get_judge_voting_prompt(
+            problem: str,
+            all_assessments: Dict[str, Dict[str, Any]],
+            voter_model: str
+    ) -> str:
+        """
+        Prompt for collaborative judge selection
+        Each model votes on who should be judge (cannot vote for self)
+        """
+        # Format other models' assessments
+        other_assessments = []
+        for model_name, assessment in all_assessments.items():
+            if model_name != voter_model:
+                other_assessments.append(f"""
+    Model: {model_name}
+    - Judge Confidence: {assessment.get('confidence_by_role', {}).get('Judge', 0.5):.2f}
+    - Solver Confidence: {assessment.get('confidence_by_role', {}).get('Solver', 0.5):.2f}
+    - Role Preference: {assessment.get('role_preferences', ['Unknown'])[0]}
+    - Reasoning: {assessment.get('reasoning_summary', 'No reasoning provided')[:150]}
+    """)
+
+        assessments_text = "\n".join(other_assessments)
+
+        return f"""You are participating in collaborative judge selection for a problem-solving debate.
+
+    PROBLEM TO BE SOLVED:
+    {problem}
+
+    OTHER MODELS' SELF-ASSESSMENTS:
+    {assessments_text}
+
+    YOUR TASK:
+    Vote for which model (excluding yourself) should serve as the final Judge for this problem.
+
+    JUDGING CRITERIA:
+    - Analytical and critical thinking ability
+    - Objectivity and fairness in evaluation
+    - Ability to compare and synthesize multiple solutions
+    - Understanding of the problem domain
+
+    IMPORTANT:
+    - You CANNOT vote for yourself
+    - Rate each other model on a scale of 0.0 to 1.0
+    - Higher scores = better suited for Judge role
+    - Provide clear reasoning for your votes
+
+    OUTPUT FORMAT (JSON):
+    {{
+        "votes_for": {{
+            "model_name_1": 0.85,
+            "model_name_2": 0.70,
+            "model_name_3": 0.65
+        }},
+        "top_choice": "model_name_1",
+        "reasoning": "I believe model_name_1 should be judge because they demonstrated strong analytical skills and objectivity in their self-assessment. Model_name_2 is also good but leans more toward solving. Model_name_3 shows solver bias."
+    }}
+
+    Respond ONLY with valid JSON, no additional text."""
+
     # Stage 2: Peer Review Prompts
     @staticmethod
     def get_peer_review_prompt(problem: str, solution_to_review: Dict[str, Any], reviewer_id: str) -> str:
@@ -190,13 +251,40 @@ Respond ONLY with valid JSON, no additional text."""
             all_reviews: List[Dict[str, Any]],
             refined_solutions: List[Dict[str, Any]]
     ) -> str:
-        data = {
+        # Summarize solutions to reduce token count
+        summarized_data = {
             "problem": problem,
-            "original_solutions": original_solutions,
-            "all_reviews": all_reviews,
-            "refined_solutions": refined_solutions
+            "solutions_summary": [
+                {
+                    "solver_id": sol.get("solver_id", "unknown"),
+                    "final_answer": sol.get("final_answer", ""),
+                    "key_steps": sol.get("solution_steps", [])[:3],  # Only first 3 steps
+                    "confidence": sol.get("confidence", 0.5)
+                }
+                for sol in original_solutions
+            ],
+            "reviews_summary": [
+                {
+                    "reviewer_id": rev.get("reviewer_id", "unknown"),
+                    "target_solver": rev.get("solution_being_reviewed", "unknown"),
+                    "overall_assessment": rev.get("overall_assessment", "unknown"),
+                    "key_critique": rev.get("evaluation", {}).get("suggested_changes", [""])[0][:100] if rev.get(
+                        "evaluation", {}).get("suggested_changes") else "No specific critique"
+                }
+                for rev in all_reviews[:6]  # Limit to 6 reviews
+            ],
+            "refined_answers": [
+                {
+                    "solver_id": ref.get("solver_id", "unknown"),
+                    "final_answer": ref.get("refined_answer", ref.get("final_answer", "")),
+                    "changes_made": ref.get("changes_made", [{}])[0].get("critique_summary", "No changes")[
+                        :50] if ref.get("changes_made") else "No changes"
+                }
+                for ref in refined_solutions
+            ]
         }
-        data_json = json.dumps(data, indent=2)
+
+        data_json = json.dumps(summarized_data, indent=2)
 
         return f"""You are the Final Judge in a collaborative debate system.
 
@@ -205,40 +293,37 @@ Respond ONLY with valid JSON, no additional text."""
     PROBLEM:
     {problem}
 
-    COMPLETE DEBATE DATA:
+    DEBATE SUMMARY:
     {data_json}
 
-    JUDGING CRITERIA:
-    1. Correctness and accuracy of final answer
-    2. Quality and clarity of reasoning
-    3. Responsiveness to peer feedback
-    4. Robustness (handles edge cases)
-    5. Efficiency and elegance of solution
+    INSTRUCTIONS:
+    1. Review each solver's final answer and key reasoning steps
+    2. Consider peer feedback and how solvers responded
+    3. Select ONE winner based on:
+       - Correctness and accuracy
+       - Quality of reasoning
+       - Responsiveness to feedback
+       - Overall robustness
 
     IMPORTANT: 
-    - You must select ONE winner from the debaters' solutions
-    - Consider both original and refined solutions
-    - Do NOT provide your own answer - pick one from the debaters
-    - Base your decision on the quality of reasoning, not external knowledge
+    - You must pick one of the solver's answers as the final answer
+    - Do not provide your own answer
+    - Return the winner's solver_id and their final answer
 
     OUTPUT FORMAT (JSON):
     {{
         "judgement": {{
-            "winner": "solver_1",  # or "solver_2", "solver_3"
+            "winner": "solver_1",  # MUST be one of: solver_1, solver_2, solver_3
             "winner_original_id": "solver_1",
             "confidence": 0.85,
             "reasoning": "Solver 1's solution is strongest because...",
             "ranking": [
-                {{"solver": "solver_1", "score": 0.95, "reason": "Most accurate with best reasoning"}},
-                {{"solver": "solver_3", "score": 0.80, "reason": "Good but missed edge case"}},
-                {{"solver": "solver_2", "score": 0.65, "reason": "Fundamental error in approach"}}
-            ],
-            "key_differentiators": [
-                "Solver 1 correctly handled the edge case that others missed",
-                "Solver 3's refinement showed good learning but initial solution was weak"
+                {{"solver": "solver_1", "score": 0.95}},
+                {{"solver": "solver_2", "score": 0.80}},
+                {{"solver": "solver_3", "score": 0.65}}
             ]
         }},
-        "selected_final_answer": "The final answer to return to user (MUST be one of the debaters' answers)"
+        "selected_final_answer": "The winner's final answer (MUST match their answer above)"
     }}
 
     Respond ONLY with valid JSON, no additional text."""

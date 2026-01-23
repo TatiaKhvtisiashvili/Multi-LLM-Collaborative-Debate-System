@@ -1,33 +1,40 @@
 models:
+  # Groq Model 1 - Fast (higher TPM limit)
   groq_llama_instant:
     provider: "groq"
     model_name: "llama-3.1-8b-instant"
-    max_tokens: 4000
+    max_tokens: 2000  # Reduce from 4000
     temperature: 0.7
 
+  # Groq Model 2 - Lower TPM limit, use less
   groq_llama_maverick:
     provider: "groq"
     model_name: "meta-llama/llama-4-maverick-17b-128e-instruct"
-    max_tokens: 4000
+    max_tokens: 1500  # Reduce significantly
     temperature: 0.7
 
+  # Mistral Model 1
   mistral_7b:
     provider: "mistral"
     model_name: "open-mistral-7b"
-    max_tokens: 4000
+    max_tokens: 2000  # Reduce from 4000
     temperature: 0.7
 
+  # Mistral Model 2 (Judge)
   mistral_mixtral:
     provider: "mistral"
     model_name: "open-mixtral-8x7b"
-    max_tokens: 8000
+    max_tokens: 2500  # Reduce from 8000
     temperature: 0.3
 
 debate_settings:
   max_retries: 3
-  timeout_seconds: 90
+  timeout_seconds: 120  # Increase timeout
   enable_caching: true
   cache_dir: "./cache"
+  # Add rate limiting
+  requests_per_minute: 10
+  tokens_per_minute: 5000
 
 evaluation:
   metrics:
