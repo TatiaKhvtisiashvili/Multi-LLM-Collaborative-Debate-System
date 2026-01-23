@@ -1,0 +1,177 @@
+{
+  "MATH_01": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "A 3×n rectangle is to be tiled with 2×1 dominoes. Find the recurrence relation for the number of tilings aₙ and compute a₈.",
+    "ground_truth_answer": "34",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_02": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the number of ordered triples (a,b,c) of positive integers satisfying 1/a + 1/b + 1/c = 1/2.",
+    "ground_truth_answer": "108",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_03": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the smallest positive integer n > 1000 such that f(n) = ⌊n/1⌋ + ⌊n/2⌋ + ... + ⌊n/n⌋ is a perfect square?",
+    "ground_truth_answer": "1156",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_04": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Determine the smallest prime factor of 1,000,000! + 1.",
+    "ground_truth_answer": ">1000001",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_05": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many ways can 10 indistinguishable balls be placed in 4 distinct boxes such that no box is empty and no box contains exactly 3 balls?",
+    "ground_truth_answer": "120",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_06": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Let S = {1,2,...,2024}. For a randomly chosen non-empty subset of S, what is the expected value of the largest element?",
+    "ground_truth_answer": "2025×2²⁰²³/(2²⁰²⁴-1)",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_07": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the last three digits of 7^(7^(7^7)).",
+    "ground_truth_answer": "343",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_08": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many 10-digit numbers contain each digit 0-9 exactly once and have the property that for each k from 1 to 9, the number formed by the first k digits is divisible by k?",
+    "ground_truth_answer": "2492",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_09": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the probability that a random permutation of 10 elements has no cycle longer than 5?",
+    "ground_truth_answer": "0.00144",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_10": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the maximum number of regions formed by n circles in the plane, where each pair intersects in exactly two points and no three intersect at a common point.",
+    "ground_truth_answer": "n²-n+2",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_11": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the smallest positive integer n such that φ(n) = 1000, where φ is Euler's totient function?",
+    "ground_truth_answer": "1111",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_12": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many ways can 15 indistinguishable balls be distributed into 5 distinct boxes such that the number of balls in each box is distinct?",
+    "ground_truth_answer": "840",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_13": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Let a₀=1, aₙ = ∑_{k=0}ⁿ⁻¹ aₖ aₙ₋₁₋ₖ. Compute a₁₀.",
+    "ground_truth_answer": "16796",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_14": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the probability that a randomly selected permutation of {1,2,...,n} has at least one fixed point? Evaluate for n=10.",
+    "ground_truth_answer": "0.632",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_15": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the smallest positive integer that can be written as the sum of two positive cubes in two different ways.",
+    "ground_truth_answer": "1729",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_16": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many integer solutions does x₁ + x₂ + x₃ + x₄ = 20 have with 0 ≤ xᵢ ≤ 9 for all i?",
+    "ground_truth_answer": "620",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_17": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the 1000th digit after the decimal point in the decimal expansion of √2?",
+    "ground_truth_answer": "8",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_18": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the number of trailing zeros in 1000! (1000 factorial).",
+    "ground_truth_answer": "249",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_19": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the smallest n such that the probability of two people in a group of n having the same birthday exceeds 3/4?",
+    "ground_truth_answer": "32",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_20": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many positive integers ≤ 1000 are divisible by neither 2, 3, nor 5?",
+    "ground_truth_answer": "266",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_21": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the remainder when 2¹⁰⁰⁰ is divided by 13.",
+    "ground_truth_answer": "3",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_22": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "What is the probability that a randomly chosen 5-digit number is divisible by 3, 5, or 7?",
+    "ground_truth_answer": "0.466",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_23": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many ways are there to make change for $1.00 using pennies, nickels, dimes, and quarters?",
+    "ground_truth_answer": "242",
+    "difficulty": "hard",
+    "source": "curated"
+  },
+  "MATH_24": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "Find the largest integer n such that 2ⁿ divides 100!",
+    "ground_truth_answer": "97",
+    "difficulty": "medium",
+    "source": "curated"
+  },
+  "MATH_25": {
+    "category": "Mathematical/Logical Reasoning",
+    "problem": "How many subsets of {1,2,...,10} contain no consecutive integers?",
+    "ground_truth_answer": "144",
+    "difficulty": "hard",
+    "source": "curated"
+  }
+}

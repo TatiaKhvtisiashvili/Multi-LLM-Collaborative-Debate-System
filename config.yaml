@@ -1,0 +1,40 @@
+models:
+  groq_llama_instant:
+    provider: "groq"
+    model_name: "llama-3.1-8b-instant"
+    max_tokens: 4000
+    temperature: 0.7
+
+  groq_llama_maverick:
+    provider: "groq"
+    model_name: "meta-llama/llama-4-maverick-17b-128e-instruct"
+    max_tokens: 4000
+    temperature: 0.7
+
+  mistral_7b:
+    provider: "mistral"
+    model_name: "open-mistral-7b"
+    max_tokens: 4000
+    temperature: 0.7
+
+  mistral_mixtral:
+    provider: "mistral"
+    model_name: "open-mixtral-8x7b"
+    max_tokens: 8000
+    temperature: 0.3
+
+debate_settings:
+  max_retries: 3
+  timeout_seconds: 90
+  enable_caching: true
+  cache_dir: "./cache"
+
+evaluation:
+  metrics:
+    - "accuracy"
+    - "improvement_rate"
+    - "consensus_rate"
+    - "judge_accuracy"
+  baseline_models:
+    - "groq_llama_instant"
+  voting_enabled: true
